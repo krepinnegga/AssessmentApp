@@ -2,22 +2,36 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ImageURISource, Dimensions } from 'react-native';
 import { Foods } from '../ConstantData';
 
-const{height:Height} = Dimensions.get('screen');
+const { height: Height } = Dimensions.get('screen');
 
 interface IFood {
-    id: number;
-    name: string;
-    price: number;
-    image: ImageURISource;
-    slug: string;
-    description: string;
+  id: number;
+  name: string;
+  price: number;
+  image: ImageURISource;
+  slug: string;
+  description: string;
 }
 
-const FoodListing: React.FC = () => {
+interface Props {
+  categoryFilter: string; // Category slug to filter foods
+}
+
+const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
+  let filteredFoods: IFood[] = [];
+
+  if (categoryFilter === 'Popular') {
+    // Display all foods if the selected category is "Popular"
+    filteredFoods = Foods;
+  } else {
+    // Filter foods based on the selected category's slug
+    filteredFoods = Foods.filter(food => food.slug === categoryFilter);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Popular (10)</Text>
-      {Foods.map((item: IFood) => (
+      {filteredFoods.map((item: IFood) => (
         <View key={item.id} style={styles.itemContainer}>
           <Image source={item.image} style={styles.image} />
           <View style={styles.infoContainer}>
@@ -44,7 +58,7 @@ const FoodListing: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 8,
     height: Height
   },
   title: {
@@ -97,7 +111,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 5.38,
     backgroundColor: '#4E4E5D',
-    marginRight: 5,
   },
   counterButtonText: {
     color: 'white',
