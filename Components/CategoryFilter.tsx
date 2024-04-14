@@ -10,7 +10,6 @@ interface Props {
     scrollY: Animated.Value;
   }
 
-
 const CategoryFilter:React.FC<Props> = ({ scrollY }) => {
   return (
 <Animated.ScrollView
