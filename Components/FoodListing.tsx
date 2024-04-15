@@ -1,35 +1,23 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ImageURISource, Dimensions, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ImageURISource, Dimensions } from 'react-native';
 import { Foods } from '../ConstantData';
 
-const { height: Height } = Dimensions.get('screen');
+const{height:Height} = Dimensions.get('screen');
 
 interface IFood {
-  id: number;
-  name: string;
-  price: number;
-  image: ImageURISource;
-  slug: string;
-  description: string;
+    id: number;
+    name: string;
+    price: number;
+    image: ImageURISource;
+    slug: string;
+    description: string;
 }
 
-interface Props {
-  categoryFilter: string;
-}
-
-const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
-  let filteredFoods: IFood[] = [];
-
-  if (categoryFilter === 'Popular') {
-    filteredFoods = Foods;
-  } else {
-    filteredFoods = Foods.filter(food => food.slug === categoryFilter);
-  }
-
+const FoodListing: React.FC = () => {
   return (
-    <ScrollView style={styles.container}>
-      {categoryFilter === 'Popular' && <Text style={styles.title}>Popular (10)</Text>}
-      {filteredFoods.map((item: IFood) => (
+    <View style={styles.container}>
+      <Text style={styles.title}>Popular (10)</Text>
+      {Foods.map((item: IFood) => (
         <View key={item.id} style={styles.itemContainer}>
           <Image source={item.image} style={styles.image} />
           <View style={styles.infoContainer}>
@@ -49,15 +37,15 @@ const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
           </View>
         </View>
       ))}
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 8,
-    height: Height,
+    paddingHorizontal: 20,
+    height: Height
   },
   title: {
     fontSize: 20,
@@ -109,6 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 5.38,
     backgroundColor: '#4E4E5D',
+    marginRight: 5,
   },
   counterButtonText: {
     color: 'white',
