@@ -2,14 +2,13 @@ import { Animated, Image, Text, StyleSheet, View, Dimensions, TouchableOpacity} 
 import React from 'react'
 import { HEADER_HEIGHT_EXPANDED, HEADER_HEIGHT_NARROWED } from '../ConstantData';
 import Categories from './Categories';
-
+import FoodListing from './FoodListing';
 
 const {width: Width} = Dimensions.get('window');
 
 interface Props {
     scrollY: Animated.Value;
   }
-
 
 const CategoryFilter:React.FC<Props> = ({ scrollY }) => {
   return (
@@ -133,13 +132,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 10,
-        paddingHorizontal: 5,
       },
       btn: {
         display: 'flex',
         flexDirection: 'row',
         gap: 10,
-        width: 174,
+        width: 184,
         height: 54,
         backgroundColor: '#1c1c24',
         alignItems: 'center',
