@@ -1,6 +1,7 @@
 import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {Category} from '../ConstantData';
 import React, {useState} from 'react';
+import FoodListing from './FoodListing';
 
 interface ICategories {
   id: number;
@@ -8,10 +9,10 @@ interface ICategories {
 }
 
 const Categories: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(1);
+  const [selectedCategory, setSelectedCategory] = useState<string>("Popular");
 
-  const handleCategoryPress = (categoryId: number) => {
-    setSelectedCategory(categoryId);
+  const handleCategoryPress = (category: string) => {
+    setSelectedCategory(category);
   };
 
   return (
@@ -19,12 +20,13 @@ const Categories: React.FC = () => {
       <View>
         <FlatList
           horizontal
+          showsHorizontalScrollIndicator={false}
           data={Category}
           renderItem={({item}: {item: ICategories}) => {
-            const isSelected = item.id === selectedCategory;
+            const isSelected = item.name === selectedCategory;
             return (
               <TouchableOpacity
-                onPress={() => handleCategoryPress(item.id)}
+                onPress={() => handleCategoryPress(item.name)}
                 style={[styles.item, isSelected && styles.selectedItem]}>
                 <Text style={[styles.text, isSelected && styles.selectedText]}>
                   {item?.name}
@@ -36,6 +38,7 @@ const Categories: React.FC = () => {
           contentContainerStyle={styles.container}
         />
       </View>
+      <FoodListing categoryFilter={selectedCategory} />
     </View>
   );
 };
@@ -43,6 +46,8 @@ const Categories: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 30,
+    paddingHorizontal:10,
+    zIndex: 2,
   },
   item: {
     width: 91,
