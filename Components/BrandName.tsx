@@ -15,7 +15,7 @@ const BrandName:React.FC<Props> = ({ scrollY }) => {
       style={{
         zIndex: 0,
         position: 'absolute',
-        top: insets.top,
+        top: insets.top + 10,
         left: 0,
         right: 0,
         display: 'flex',
@@ -37,7 +37,7 @@ const BrandName:React.FC<Props> = ({ scrollY }) => {
           },
         ],
       }}>
-      <Image source={require('../assets/Logo.png')} />
+      <Image source={require('../assets/Logo.png')} style={{width: 50, height: 50}} />
 
       <Text style={styles.titleText}>The Food Cafe</Text>
     </Animated.View>
@@ -48,7 +48,7 @@ export default BrandName
 
 const styles = StyleSheet.create({
   titleText: {
-    fontSize: 24,
+    fontSize: 17,
     color: '#FFFFFF',
     fontWeight: 'bold',
   },
