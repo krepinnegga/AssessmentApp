@@ -39,7 +39,7 @@ export const Category = [
       name: 'Spicy Burger',
       price: 45,
       image: require('./assets/Spicyburger.png'),
-      slug: 'Burger',
+      slug: 'Combo',
       description: 'Habanero',
     },
     {

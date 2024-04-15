@@ -57,8 +57,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: HEADER_HEIGHT_EXPANDED + HEADER_HEIGHT_NARROWED,
-    
+    height: HEADER_HEIGHT_EXPANDED + HEADER_HEIGHT_NARROWED, 
   },
 });
 
