@@ -71,16 +71,11 @@ const CategoryFilter:React.FC<Props> = ({ scrollY }) => {
                 </View>
            {/* Button */}    
         </View>
-
         <Categories />
-
-        <FoodListing />
-
       </View>
     </Animated.ScrollView>
   )
 }
-
 export default CategoryFilter
 
 const styles = StyleSheet.create({
