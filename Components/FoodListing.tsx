@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ImageURISource, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ImageURISource, Dimensions, ScrollView } from 'react-native';
 import { Foods } from '../ConstantData';
 
 const { height: Height } = Dimensions.get('screen');
@@ -14,23 +14,21 @@ interface IFood {
 }
 
 interface Props {
-  categoryFilter: string; // Category slug to filter foods
+  categoryFilter: string;
 }
 
 const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
   let filteredFoods: IFood[] = [];
 
   if (categoryFilter === 'Popular') {
-    // Display all foods if the selected category is "Popular"
     filteredFoods = Foods;
   } else {
-    // Filter foods based on the selected category's slug
     filteredFoods = Foods.filter(food => food.slug === categoryFilter);
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Popular (10)</Text>
+    <ScrollView style={styles.container}>
+      {categoryFilter === 'Popular' && <Text style={styles.title}>Popular (10)</Text>}
       {filteredFoods.map((item: IFood) => (
         <View key={item.id} style={styles.itemContainer}>
           <Image source={item.image} style={styles.image} />
@@ -51,7 +49,7 @@ const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
           </View>
         </View>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
     paddingHorizontal: 8,
-    height: Height
+    height: Height,
   },
   title: {
     fontSize: 20,
