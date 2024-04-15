@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   description: {
-    fontSize: 16,
-    color: 'white',
+    fontSize: 13,
+    color: '#DACFDB',
     marginBottom: 3,
   },
   price: {
