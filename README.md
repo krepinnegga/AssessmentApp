@@ -1,7 +1,8 @@
 <h1>HiiTown Assesment App</h1>
 
-<img width="941" alt="Screen Shot 2024-04-15 at 5 45 26 PM" src="https://github.com/krepinnegga/AssessmentApp/assets/102814848/c89eb26c-0ba2-479b-91d6-3a2dacbe819b">
-<img width="941" alt="Screen Shot 2024-04-15 at 5 45 03 PM" src="https://github.com/krepinnegga/AssessmentApp/assets/102814848/e99633af-2f76-4cb2-b066-4ca47a376bbe">
+
+https://github.com/krepinnegga/AssessmentApp/assets/102814848/c1015e11-4dea-4cc3-8341-184513949d76
+
 
 
 <p>To Run this app Expo React Native App on a simulator or physical device 📲</p>
