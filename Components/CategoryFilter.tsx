@@ -29,7 +29,7 @@ const CategoryFilter:React.FC<Props> = ({ scrollY }) => {
       style={{
         zIndex: 3,
         marginTop: HEADER_HEIGHT_NARROWED,
-        paddingTop: Height < 892 ? 250 : 200,
+        paddingTop: Height < 892 ? 240 : 200,
       }}>
      
       <Categories />
