@@ -26,9 +26,13 @@ const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
     filteredFoods = Foods.filter(food => food.slug === categoryFilter);
   }
 
+  const length = filteredFoods.length;
+
   return (
-    <ScrollView style={styles.container}>
-      {categoryFilter === 'Popular' && <Text style={styles.title}>Popular (10)</Text>}
+    <ScrollView 
+      style={styles.container} 
+    >
+      <Text style={styles.title}>{categoryFilter} ({length})</Text>
       {filteredFoods.map((item: IFood) => (
         <View key={item.id} style={styles.itemContainer}>
           <Image source={item.image} style={styles.image} />
@@ -57,7 +61,8 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
     paddingHorizontal: 8,
-    height: Height ,
+    height: Height * 2.2 ,
+    backgroundColor: '#13131B'
   },
   title: {
     fontSize: 20,

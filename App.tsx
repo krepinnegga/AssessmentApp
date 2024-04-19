@@ -33,8 +33,7 @@ function App() {
 
        <BrandName scrollY={scrollY} />
        
-  
-       <CategoryFilter scrollY={scrollY} />
+       <CategoryFilter  />
 
     </View>
   );

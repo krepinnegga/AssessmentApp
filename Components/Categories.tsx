@@ -1,32 +1,33 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Category } from '../ConstantData';
-import FoodListing from './FoodListing';
-import Details from './Details';
 
 interface ICategories {
   id: number;
   name: string;
 }
 
-const Categories: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('Popular');
+interface Props {
+  onSelectCategory: (category: string) => void;
+  selectedCategory: string;
+}
+
+const Categories: React.FC<Props> = ({ onSelectCategory, selectedCategory }) => {
+  const [selectedItem, setSelectedItem] = useState<string>(selectedCategory);
 
   const handleCategoryPress = (category: string) => {
-    setSelectedCategory(category);
+    setSelectedItem(category);
+    onSelectCategory(category);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Details />
-      </View>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollViewContent}>
         {Category.map((item: ICategories) => {
-          const isSelected = item.name === selectedCategory;
+          const isSelected = item.name === selectedItem;
           return (
             <TouchableOpacity
               key={item.id}
@@ -39,7 +40,7 @@ const Categories: React.FC = () => {
           );
         })}
       </ScrollView>
-      <FoodListing categoryFilter={selectedCategory} />
+  
     </View>
   );
 };

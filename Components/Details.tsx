@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       paddingHorizontal: 5,
-      backgroundColor: '#13131B'
+      backgroundColor: '#13131B',
+      paddingBottom: 30
     },
     mainTitle: {
         display: 'flex',

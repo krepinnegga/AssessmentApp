@@ -1,43 +1,100 @@
-import { Animated, Dimensions} from 'react-native';
-import React from 'react'
-import { HEADER_HEIGHT_NARROWED } from '../ConstantData';
+import { View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
 import Categories from './Categories';
+import FoodListing from './FoodListing';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  Extrapolation,
+  useAnimatedScrollHandler,
+} from 'react-native-reanimated';
+import Details from './Details';
 
+const CategoryFilter: React.FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('Popular');
 
+  const handleCategoryPress = (category: string) => {
+    setSelectedCategory(category);
+  };
 
-const {height: Height} = Dimensions.get('window');
+  const scrollY = useSharedValue(0);
 
-interface Props {
-    scrollY: Animated.Value;
-  }
+  const translateY = interpolate(scrollY.value, [0, 200], [0, -40], Extrapolation.CLAMP);
 
+  const stick = useAnimatedStyle(() => {
+    const top = interpolate(
+      scrollY.value,
+      [321 - 150, 321 + 250, 1800, 2300],
+      [150, 0, 0, 150],
+      Extrapolation.CLAMP
+    );
+    const opacity = interpolate(
+      scrollY.value,
+      [321 - 150, 321 + 250, 1800, 2300],
+      [0, 1, 0.7, 1],
+      Extrapolation.CLAMP
+    );
 
-const CategoryFilter:React.FC<Props> = ({ scrollY }) => {
+    return {
+      top,
+      opacity,
+    };
+  });
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+      translateY;
+    },
+  });
+
   return (
-<Animated.ScrollView
-      showsVerticalScrollIndicator={false}
-      onScroll={Animated.event(
-        [
-          {
-            nativeEvent: {
-              contentOffset: { y: scrollY },
-            },
-          },
-        ],
-        { useNativeDriver: true }
-      )}
-      style={{
-        zIndex: 3,
-        marginTop: HEADER_HEIGHT_NARROWED,
-        paddingTop: Height < 892 ? 240 : 200,
-      }}>
-     
-      <Categories />
+    <View>
+      <Animated.ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{
+          zIndex: 3,
+          marginTop: 200,
+          paddingTop: 118,
+        }}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+      >
+        <Details />
+        <Categories onSelectCategory={handleCategoryPress} selectedCategory={selectedCategory} />
+        <FoodListing categoryFilter={selectedCategory} />
+      </Animated.ScrollView>
 
-    
+      <Animated.View style={[styles.horizontal, stick]}>
+        <Categories onSelectCategory={handleCategoryPress} selectedCategory={selectedCategory} />
+      </Animated.View>
+    </View>
+  );
+};
 
-    </Animated.ScrollView>
-  )
-}
-export default CategoryFilter
+export default CategoryFilter;
 
+const styles = StyleSheet.create({
+  horizontal: {
+    height: 300,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    opacity: 0,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 24,
+  },
+  titleText: {
+    fontSize: 17,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+});
