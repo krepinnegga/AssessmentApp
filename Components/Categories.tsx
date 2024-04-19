@@ -1,7 +1,8 @@
-import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
-import {Category} from '../ConstantData';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { Category } from '../ConstantData';
 import FoodListing from './FoodListing';
+import Details from './Details';
 
 interface ICategories {
   id: number;
@@ -9,35 +10,35 @@ interface ICategories {
 }
 
 const Categories: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("Popular");
+  const [selectedCategory, setSelectedCategory] = useState<string>('Popular');
 
   const handleCategoryPress = (category: string) => {
     setSelectedCategory(category);
   };
 
   return (
-    <View>
-      <View>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={Category}
-          renderItem={({item}: {item: ICategories}) => {
-            const isSelected = item.name === selectedCategory;
-            return (
-              <TouchableOpacity
-                onPress={() => handleCategoryPress(item.name)}
-                style={[styles.item, isSelected && styles.selectedItem]}>
-                <Text style={[styles.text, isSelected && styles.selectedText]}>
-                  {item?.name}
-                </Text>
-              </TouchableOpacity>
-            );
-          }}
-          keyExtractor={item => item.id.toString()}
-          contentContainerStyle={styles.container}
-        />
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Details />
       </View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollViewContent}>
+        {Category.map((item: ICategories) => {
+          const isSelected = item.name === selectedCategory;
+          return (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => handleCategoryPress(item.name)}
+              style={[styles.item, isSelected && styles.selectedItem]}>
+              <Text style={[styles.text, isSelected && styles.selectedText]}>
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
       <FoodListing categoryFilter={selectedCategory} />
     </View>
   );
@@ -45,9 +46,16 @@ const Categories: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 30,
-    paddingHorizontal:10,
-    zIndex: 2,
+    flex: 1,
+    backgroundColor: '#13131B'
+  },
+  headerContainer: {
+    paddingBottom: 20,
+  },
+  scrollViewContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10,
   },
   item: {
     width: 91,

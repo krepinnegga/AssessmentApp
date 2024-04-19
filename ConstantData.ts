@@ -58,13 +58,5 @@ export const Category = [
       slug: 'Pasta',
       description: 'Chilli Hot',
     },
-    {
-      id: 5,
-      name: 'Fetuccini Pasta',
-      price: 40,
-      image: require('./assets/pasta.png'),
-      slug: 'Pasta',
-      description: 'Chilli Hot',
-    },
   ];
   
