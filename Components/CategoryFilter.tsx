@@ -83,7 +83,7 @@ export default CategoryFilter;
 
 const styles = StyleSheet.create({
   horizontal: {
-    height: 250,
+    height: 267,
     position: 'absolute',
     top: 0,
     left: 0,
