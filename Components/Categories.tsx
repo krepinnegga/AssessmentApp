@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Category } from '../ConstantData';
 
 interface ICategories {
@@ -10,9 +10,10 @@ interface ICategories {
 interface Props {
   onSelectCategory: (category: string) => void;
   selectedCategory: string;
+  showTitle: boolean;
 }
 
-const Categories: React.FC<Props> = ({ onSelectCategory, selectedCategory }) => {
+const Categories: React.FC<Props> = ({ onSelectCategory, selectedCategory, showTitle }) => {
   const [selectedItem, setSelectedItem] = useState<string>(selectedCategory);
 
   const handleCategoryPress = (category: string) => {
@@ -22,6 +23,14 @@ const Categories: React.FC<Props> = ({ onSelectCategory, selectedCategory }) => 
 
   return (
     <View style={styles.container}>
+       {showTitle && 
+          <View style={styles.mainTitle}>
+            <View style={styles.titleElement}>
+            <Image source={require('../assets/Logo.png')} style={{width: 40, height: 40}} />
+            <Text style={styles.titleText}>The Food Cafe</Text>
+            </View>
+         </View>
+      }
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -50,9 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#13131B'
   },
-  headerContainer: {
-    paddingBottom: 20,
-  },
+ 
   scrollViewContent: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -76,6 +83,24 @@ const styles = StyleSheet.create({
   },
   selectedText: {
     color: '#FFC107',
+  },
+  mainTitle: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    top: 60,
+  },
+  titleElement: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  titleText: {
+    fontSize: 17,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
   },
 });
 

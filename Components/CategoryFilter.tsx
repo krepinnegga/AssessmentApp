@@ -32,7 +32,7 @@ const CategoryFilter: React.FC = () => {
     const opacity = interpolate(
       scrollY.value,
       [321 - 150, 321 + 250, 1800, 2300],
-      [0, 1, 0.7, 1],
+      [0, 1, 0.8, 1],
       Extrapolation.CLAMP
     );
 
@@ -62,12 +62,18 @@ const CategoryFilter: React.FC = () => {
         scrollEventThrottle={16}
       >
         <Details />
-        <Categories onSelectCategory={handleCategoryPress} selectedCategory={selectedCategory} />
-        <FoodListing categoryFilter={selectedCategory} />
+        <Categories 
+           onSelectCategory={handleCategoryPress} 
+           selectedCategory={selectedCategory} 
+           showTitle={false}
+         />
+        <FoodListing 
+           categoryFilter={selectedCategory} 
+        />
       </Animated.ScrollView>
 
       <Animated.View style={[styles.horizontal, stick]}>
-        <Categories onSelectCategory={handleCategoryPress} selectedCategory={selectedCategory} />
+        <Categories onSelectCategory={handleCategoryPress} selectedCategory={selectedCategory} showTitle={true} />
       </Animated.View>
     </View>
   );
@@ -77,7 +83,7 @@ export default CategoryFilter;
 
 const styles = StyleSheet.create({
   horizontal: {
-    height: 300,
+    height: 250,
     position: 'absolute',
     top: 0,
     left: 0,
