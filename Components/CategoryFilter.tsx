@@ -73,7 +73,11 @@ const CategoryFilter: React.FC = () => {
       </Animated.ScrollView>
 
       <Animated.View style={[styles.horizontal, stick]}>
-        <Categories onSelectCategory={handleCategoryPress} selectedCategory={selectedCategory} showTitle={true} />
+        <Categories 
+          onSelectCategory={handleCategoryPress} 
+          selectedCategory={selectedCategory} 
+          showTitle={true} 
+        />
       </Animated.View>
     </View>
   );

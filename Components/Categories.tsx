@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Category } from '../ConstantData';
 
@@ -15,6 +15,11 @@ interface Props {
 
 const Categories: React.FC<Props> = ({ onSelectCategory, selectedCategory, showTitle }) => {
   const [selectedItem, setSelectedItem] = useState<string>(selectedCategory);
+
+
+  useEffect(() => {
+    setSelectedItem(selectedCategory);
+  }, [selectedCategory]);
 
   const handleCategoryPress = (category: string) => {
     setSelectedItem(category);
