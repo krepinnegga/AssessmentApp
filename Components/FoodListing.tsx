@@ -28,9 +28,18 @@ const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
 
   const length = filteredFoods.length;
 
+  let totalHeight = null;
+  if (length <= 5) {
+    const itemHeight = 280;
+    totalHeight = length * itemHeight;
+  } else {
+    totalHeight = null;
+  }
+
   return (
     <ScrollView 
-      style={styles.container} 
+      style={[styles.container, { height: totalHeight === null ? Height * 2.2 : totalHeight }]} 
+      contentContainerStyle={{ minHeight: totalHeight }}
     >
       <Text style={styles.title}>{categoryFilter} ({length})</Text>
       {filteredFoods.map((item: IFood) => (
@@ -61,7 +70,6 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
     paddingHorizontal: 8,
-    height: Height * 2.2 ,
     backgroundColor: '#13131B'
   },
   title: {
