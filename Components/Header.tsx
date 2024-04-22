@@ -15,7 +15,7 @@ const Header: React.FC<Props> = ({ scrollY }) => {
   const imageScale = useAnimatedStyle(() => {
     const scale = interpolate(
       scrollY.value,
-      [-200, 0],
+      [-40, 0],
       [5, 1],
       Extrapolation.EXTEND
     );
@@ -27,7 +27,7 @@ const Header: React.FC<Props> = ({ scrollY }) => {
   const blurOpacity = useAnimatedStyle(() => {
     const opacity = interpolate(
       scrollY.value,
-      [-50, 0, 50, 100],
+      [-60, 0, 50, 100],
       [1, 0, 0, 1],
       Extrapolation.CLAMP
     );

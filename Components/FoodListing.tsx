@@ -29,8 +29,8 @@ const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
   const length = filteredFoods.length;
 
   let totalHeight = null;
-  if (length <= 5) {
-    const itemHeight = 280;
+  if (length <= 5 ) {
+    const itemHeight = 370;
     totalHeight = length * itemHeight;
   } else {
     totalHeight = null;
@@ -38,7 +38,7 @@ const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
 
   return (
     <ScrollView 
-      style={[styles.container, { height: totalHeight === null ? Height * 2.2 : totalHeight }]} 
+      style={[styles.container, { height: totalHeight === null ? Height * 2.3 : totalHeight }]} 
       contentContainerStyle={{ minHeight: totalHeight }}
     >
       <Text style={styles.title}>{categoryFilter} ({length})</Text>
