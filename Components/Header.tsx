@@ -1,47 +1,53 @@
 import React from 'react';
-import { View, ImageBackground, Animated, StyleSheet } from 'react-native';
+import { View, ImageBackground, StyleSheet } from 'react-native';
 import { HEADER_HEIGHT_NARROWED, HEADER_HEIGHT_EXPANDED } from '../ConstantData';
 import { BlurView } from 'expo-blur';
+import Animated, { useAnimatedStyle, interpolate, SharedValue, Extrapolation } from 'react-native-reanimated';
 
 interface Props {
-    scrollY: Animated.Value;
-  }
+  scrollY: SharedValue<number>;
+}
 
 const AnimatedImageBackground = Animated.createAnimatedComponent(ImageBackground);
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
 const Header: React.FC<Props> = ({ scrollY }) => {
-  const imageScale = scrollY.interpolate({
-    inputRange: [-200, 0],
-    outputRange: [5, 1],
-    extrapolateLeft: 'extend',
-    extrapolateRight: 'clamp',
+  const imageScale = useAnimatedStyle(() => {
+    const scale = interpolate(
+      scrollY.value,
+      [-200, 0],
+      [5, 1],
+      Extrapolation.EXTEND
+    );
+    return {
+      transform: [{ scale }],
+    };
+  });
+
+  const blurOpacity = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      scrollY.value,
+      [-50, 0, 50, 100],
+      [1, 0, 0, 1],
+      Extrapolation.CLAMP
+    );
+    return {
+      opacity,
+    };
   });
 
   return (
     <View style={styles.container}>
       <AnimatedImageBackground
         source={require('../assets/Banner.png')}
-        style={[
-          styles.image,
-          {
-            transform: [{ scale: imageScale }],
-          },
-        ]}
+        style={[styles.image, imageScale]}
       >
-     <AnimatedBlurView
-        tint="dark"
-        intensity={96}
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          zIndex: 2,
-          opacity: scrollY.interpolate({
-            inputRange: [-50, 0, 50, 100],
-            outputRange: [1, 0, 0, 1],
-          }),
-        }}
-      />
-    </AnimatedImageBackground>
+        <AnimatedBlurView
+          tint="dark"
+          intensity={96}
+          style={[StyleSheet.absoluteFill, styles.blurView, blurOpacity]}
+        />
+      </AnimatedImageBackground>
     </View>
   );
 };
@@ -58,7 +64,9 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: HEADER_HEIGHT_EXPANDED + HEADER_HEIGHT_NARROWED,
-    
+  },
+  blurView: {
+    zIndex: 2,
   },
 });
 

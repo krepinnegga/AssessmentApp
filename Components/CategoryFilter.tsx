@@ -5,20 +5,23 @@ import FoodListing from './FoodListing';
 import Animated, {
   interpolate,
   useAnimatedStyle,
-  useSharedValue,
+  SharedValue,
   Extrapolation,
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 import Details from './Details';
 
-const CategoryFilter: React.FC = () => {
+interface Props {
+  scrollY: SharedValue<number>;
+}
+
+const CategoryFilter: React.FC<Props> = ({scrollY}) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Popular');
 
   const handleCategoryPress = (category: string) => {
     setSelectedCategory(category);
   };
 
-  const scrollY = useSharedValue(0);
 
   const translateY = interpolate(scrollY.value, [0, 200], [0, -40], Extrapolation.CLAMP);
 

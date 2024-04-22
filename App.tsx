@@ -1,12 +1,12 @@
-import React, { useRef } from 'react';
-import { Animated, StatusBar, StyleSheet, View, ScrollView } from 'react-native';
+import React from 'react';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Buttons from './Components/Buttons';
 import RefreshArrow from './Components/RefreshArrow';
 import Header from './Components/Header';
-import BrandName from './Components/BrandName';
 import CategoryFilter from './Components/CategoryFilter';
-import {  } from 'react-native-gesture-handler';
+import { useSharedValue } from 'react-native-reanimated';
+
 
 export default function WrappedApp() {
     return (
@@ -18,7 +18,7 @@ export default function WrappedApp() {
 
 
 function App() {
-  const scrollY = useRef(new Animated.Value(0)).current;
+  const scrollY = useSharedValue(0);
 
   return (
    <View style={styles.container}>
@@ -30,10 +30,8 @@ function App() {
        <RefreshArrow scrollY={scrollY} />
 
        <Header scrollY={scrollY} />
-
-       <BrandName scrollY={scrollY} />
        
-       <CategoryFilter  />
+       <CategoryFilter scrollY={scrollY}  />
 
     </View>
   );

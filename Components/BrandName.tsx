@@ -1,48 +1,44 @@
-import { Animated, Text, StyleSheet, Image } from 'react-native';
+import { Text, StyleSheet, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React from 'react';
+import Animated, { useAnimatedStyle, interpolate, SharedValue } from 'react-native-reanimated';
 
 interface Props {
-    scrollY: Animated.Value;
-  }
+  scrollY: SharedValue<number>;
+}
   
 
-const BrandName:React.FC<Props> = ({ scrollY }) => {
-    const insets = useSafeAreaInsets();
-    
-  return (
-    <Animated.View
-      style={{
-        zIndex: 0,
-        position: 'absolute',
-        top: insets.top + 10,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        alignItems:'center',
-        gap: 10,
-        opacity: scrollY.interpolate({
-          inputRange: [90, 110],
-          outputRange: [0, 1],
-        }),
-        transform: [
-          {
-            translateY: scrollY.interpolate({
-              inputRange: [90, 120],
-              outputRange: [30, 0],
-              extrapolate: 'clamp',
-            }),
-          },
-        ],
-      }}>
-      <Image source={require('../assets/Logo.png')} style={{width: 50, height: 50}} />
+const BrandName: React.FC<Props> = ({ scrollY }) => {
+  const insets = useSafeAreaInsets();
 
+  const brandNameStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(scrollY.value, [90, 110], [0, 1.0]);
+    const translateY = interpolate(scrollY.value, [90, 120], [30, 0]);
+
+    return {
+      zIndex: 0,
+      position: 'absolute',
+      top: insets.top + 10,
+      left: 0,
+      right: 0,
+      display: 'flex',
+      justifyContent: 'center',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 10,
+      opacity,
+      transform: [{ translateY }],
+    };
+  });
+
+  return (
+    <Animated.View style={brandNameStyle}>
+      <Image source={require('../assets/Logo.png')} style={{ width: 50, height: 50 }} />
       <Text style={styles.titleText}>The Food Cafe</Text>
     </Animated.View>
-  )
-}
+  );
+};
+
 
 export default BrandName
 
