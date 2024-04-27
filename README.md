@@ -1,6 +1,10 @@
 <h1>HiiTown Assesment App</h1>
 
-https://github.com/krepinnegga/AssessmentApp/assets/102814848/9b1f74dc-3fa5-4e01-afa4-f76dafa3840d
+
+
+https://github.com/krepinnegga/AssessmentApp/assets/102814848/6aa901bd-988d-4048-8964-9b9b9c02d520
+
+
 
 <h2>DEMO 👆</h2>
 
