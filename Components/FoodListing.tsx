@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ImageURISource, Dimensions, ScrollView } from 'react-native';
 import { Foods } from '../ConstantData';
 
@@ -18,6 +18,8 @@ interface Props {
 }
 
 const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
+  const [amount, setAmount] = useState<{ [key: number]: number }>({});
+
   let filteredFoods: IFood[] = [];
 
   if (categoryFilter === 'Popular') {
@@ -36,6 +38,21 @@ const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
     totalHeight = null;
   }
 
+  const handleIncrement = (itemId: number) => {
+    setAmount((prevAmounts) => ({
+      ...prevAmounts,
+      [itemId]: (prevAmounts[itemId] || 0) + 1,
+    }));
+  };
+
+  const handleDecrement = (itemId: number) => {
+    setAmount((prevAmounts) => ({
+      ...prevAmounts,
+      [itemId]: Math.max((prevAmounts[itemId] || 0) - 1, 0),
+    }));
+  };
+
+
   return (
     <ScrollView 
       style={[styles.container, { height: totalHeight === null ? Height * 2.3 : totalHeight }]} 
@@ -52,11 +69,17 @@ const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
           </View>
           {/* Counter */}
           <View style={styles.counterContainer}>
-            <TouchableOpacity style={styles.counterButton}>
+            <TouchableOpacity  
+                onPress={() => handleDecrement(item.id)} 
+                style={styles.counterButton}
+            >
               <Text style={styles.counterButtonText}>-</Text>
             </TouchableOpacity>
-            <Text style={styles.counterText}>5</Text>
-            <TouchableOpacity style={styles.counterButton}>
+            <Text style={styles.counterText}>{amount[item.id] || 0}</Text>
+            <TouchableOpacity  
+               onPress={() => handleIncrement(item.id)} 
+               style={styles.counterButton}
+            >
               <Text style={styles.counterButtonText}>+</Text>
             </TouchableOpacity>
           </View>
