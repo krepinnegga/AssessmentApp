@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ImageURISource, Dimensions, ScrollView } from 'react-native';
 import { Foods } from '../ConstantData';
 
@@ -17,16 +17,23 @@ interface Props {
   categoryFilter: string;
 }
 
-const FoodListing: React.FC<Props> = ({ categoryFilter }) => {
+const FoodListing = ({ categoryFilter } : Props) => {
   const [amount, setAmount] = useState<{ [key: number]: number }>({});
 
-  let filteredFoods: IFood[] = [];
+  //let filteredFoods: IFood[] = [];
 
-  if (categoryFilter === 'Popular') {
-    filteredFoods = Foods;
-  } else {
-    filteredFoods = Foods.filter(food => food.slug === categoryFilter);
-  }
+  const filteredFoods = useMemo(() => {
+    let tempFoods: IFood[] = [];
+
+    if (categoryFilter === 'Popular') {
+      tempFoods = Foods;
+    } else {
+      tempFoods = Foods.filter(food => food.slug === categoryFilter);
+    }
+    return tempFoods
+  }, [categoryFilter])
+
+
 
   const length = filteredFoods.length;
 
